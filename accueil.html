@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zone Vintage - Lunettes Rétro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4e8c1 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwAAD4BAABvfB5IAAACAAAYZ2NgYAAAAAEAAABWAAAAAAA=') repeat;
+            font-family: 'Courier New', Courier, monospace;
+            color: #3b2d2d;
+        }
+
+        /* Fixed Full-Width Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff1e1;
+            border-bottom: 3px solid #4a3728;
+            box-shadow: 0px 4px 12px rgba(74, 55, 40, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .navbar .icon {
+            display: block;
+            padding: 8px 15px;
+            cursor: pointer;
+            color: #4a3728;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=') repeat;
+            border-radius: 50px;
+            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar .icon::before {
+            content: '👓'; /* Retro glasses icon */
+            font-size: 20px;
+        }
+
+        .navbar .icon:hover {
+            background-color: #e8d9c2;
+            transform: scale(1.05);
+        }
+
+        .navbar a {
+            display: none;
+            color: #4a3728;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 20px;
+            margin: 0 10px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=') repeat;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #e8d9c2;
+            color: #7b5e3f;
+            transform: scale(1.05);
+        }
+
+        .navbar.show a {
+            display: block;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+            padding-bottom: 100px;
+        }
+
+        .intro {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #fdf6e8, #e8d9c2);
+            border-bottom: 4px double #4a3728;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+            pointer-events: none;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+            color: #4a3728;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro p {
+            font-size: 16px;
+            color: #6b5846;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Portfolio (Carousel Section) */
+        .portfolio {
+            display: flex;
+            overflow-x: auto;
+            gap: 25px;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+            background: #e8d9c2 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwAAD4BAABvfB5IAAACAAAYZ2NgYAAAAAEAAABWAAAAAAA=') repeat;
+            margin: 0 20px;
+            border-radius: 12px;
+            scrollbar-color: #4a3728 #e8d9c2;
+        }
+
+        .portfolio::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .portfolio::-webkit-scrollbar-track {
+            background: #e8d9c2;
+            border-radius: 4px;
+        }
+
+        .portfolio::-webkit-scrollbar-thumb {
+            background: #4a3728;
+            border-radius: 4px;
+        }
+
+        .portfolio-item {
+            flex: 0 0 300px;
+            background: transparent;
+            border: none;
+            overflow: hidden;
+            scroll-snap-align: start;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQYV2NkYGD4z8DAwMDIAAUAAK8BFh9R9K8AAAAASUVORK5CYII=') repeat;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+        }
+
+        .carousel-slide .polaroid {
+            background: #fff;
+            padding: 15px 15px 40px 15px; /* Uniform padding, extra bottom for Polaroid effect */
+            border: 1px solid #ccc;
+            transform: rotate(-2deg); /* Slight random tilt */
+            transition: transform 0.3s ease, scale 0.3s ease;
+            width: calc(100% - 30px); /* Adjust for padding */
+            box-sizing: border-box;
+        }
+
+        .carousel-slide:nth-child(2) .polaroid {
+            transform: rotate(2deg); /* Vary tilt for visual interest */
+        }
+
+        .carousel-slide:nth-child(3) .polaroid {
+            transform: rotate(-1deg);
+        }
+
+        .carousel-slide .polaroid:hover {
+            transform: rotate(0deg) scale(1.05); /* Straighten and scale on hover */
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 200px; /* Adjusted for Polaroid frame */
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-slide h3 {
+            font-size: 18px;
+            color: #4a3728;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #4a3728;
+            animation: typewriter 2s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #4a3728; }
+        }
+
+        .carousel-slide p {
+            font-size: 14px;
+            color: #6b5846;
+            padding: 0 15px;
+            margin: 0;
+            line-height: 1.5;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-nav button {
+            background: #4a3728;
+            color: #fff1e1;
+            border: 2px solid #7b5e3f;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-nav button.prev::before {
+            content: '←'; /* Calligraphic arrow */
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+        }
+
+        .carousel-nav button.next::before {
+            content: '→';
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+        }
+
+        .carousel-nav button:hover {
+            background-color: #7b5e3f;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #fff1e1 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwAAD4BAABvfB5IAAACAAAYZ2NgYAAAAAEAAABWAAAAAAA=') repeat;
+            border: 3px double #4a3728;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px 20px;
+            text-align: center;
+            box-shadow: 0px 8px 16px rgba(74, 55, 40, 0.2);
+            position: relative;
+        }
+
+        .contact h2 {
+            font-size: 24px;
+            color: #4a3728;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact p {
+            font-size: 14px;
+            color: #6b5846;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .contact a {
+            color: #2e6b6b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .contact a:hover {
+            color: #3f8b8b;
+        }
+
+        /* Fixed Full-Width Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff1e1;
+            border-top: 3px solid #4a3728;
+            box-shadow: 0px -4px 12px rgba(74, 55, 40, 0.2);
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: #6b5846;
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #2e6b6b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #3f8b8b;
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            z-index: 1000;
+            background: #fff1e1;
+            padding: 10px;
+            border: 2px solid #4a3728;
+            border-radius: 8px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Media Queries */
+        @media screen and (min-width: 600px) {
+            .navbar {
+                flex-wrap: nowrap;
+            }
+
+            .navbar a {
+                display: inline-block;
+            }
+
+            .navbar .icon {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .portfolio {
+                justify-content: center;
+                overflow-x: visible;
+            }
+
+            .portfolio-item {
+                flex: 0 0 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navbar -->
+    <header>
+        <nav class="navbar" id="myNavbar">
+            <div class="icon" onclick="toggleNavbar()"></div>
+            <a href="accueil.html">Accueil</a>
+            <a href="collections.html">Collections</a>
+            <a href="#about">À propos</a>
+            <a href="#contact">Contact</a>
+            <a href="login.html">Connexion</a>
+            <a href="signup.html">Inscription</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Intro Section -->
+        <section class="intro">
+            <h1>Bienvenue chez Zone Vintage</h1>
+            <p>Découvrez notre collection exclusive de lunettes rétro, où l'élégance intemporelle rencontre le style moderne. Chaque paire raconte une histoire, inspirée des époques dorées du design. Plongez dans le charme du passé et trouvez la monture parfaite pour sublimer votre look.</p>
+        </section>
+
+        <!-- Portfolio (Sunglasses Carousels) -->
+        <section id="portfolio" class="portfolio">
+            <!-- Collection 1: Classic Aviators -->
+            <div class="portfolio-item">
+                <div class="carousel" id="carousel-1">
+                    <div class="carousel-slide active">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143242.jpg" alt="Lunettes Aviator Gold">
+                            <h3>Aviator Gold</h3>
+                            <p>Monture dorée iconique avec verres teintés, parfaite pour un style audacieux inspiré des années 70.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143050.jpg" alt="Lunettes Aviator Silver">
+                            <h3>Aviator Silver</h3>
+                            <p>Élégance intemporelle en argent, idéale pour les aventuriers modernes avec une touche rétro.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/RALPH_LAUREN.jpg" alt="Lunettes Aviator Black">
+                            <h3>Aviator Black</h3>
+                            <p>Design sombre et sophistiqué, pour un look mystérieux qui ne passe jamais inaperçu.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev" onclick="changeSlide('carousel-1', -1)"></button>
+                    <button class="next" onclick="changeSlide('carousel-1', 1)"></button>
+                </div>
+            </div>
+
+            <!-- Collection 2: Retro Round -->
+            <div class="portfolio-item">
+                <div class="carousel" id="carousel-2">
+                    <div class="carousel-slide active">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143119.jpg" alt="Lunettes Round Tortoise">
+                            <h3>Round Tortoise</h3>
+                            <p>Monture écaille de tortue, inspirée des années 60, pour un charme intellectuel et bohème.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143022.jpg" alt="Lunettes Round Clear">
+                            <h3>Round Clear</h3>
+                            <p>Cristal transparent pour un look minimaliste, parfait pour les esprits libres d’aujourd’hui.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143314.jpg" alt="Lunettes Round Gold">
+                            <h3>Round Gold</h3>
+                            <p>Accents dorés délicats, évoquant l’élégance des salons littéraires d’antan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev" onclick="changeSlide('carousel-2', -1)"></button>
+                    <button class="next" onclick="changeSlide('carousel-2', 1)"></button>
+                </div>
+            </div>
+
+            <!-- Collection 3: Cat-Eye Glam -->
+            <div class="portfolio-item">
+                <div class="carousel" id="carousel-3">
+                    <div class="carousel-slide active">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143106.jpg" alt="Lunettes Cat-Eye Red">
+                            <h3>Cat-Eye Red</h3>
+                            <p>Rouge vibrant et forme audacieuse, pour une allure glamour digne des divas des années 50.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143145.jpg" alt="Lunettes Cat-Eye Black">
+                            <h3>Cat-Eye Black</h3>
+                            <p>Noir classique avec une pointe de mystère, idéal pour captiver tous les regards.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="polaroid">
+                            <img src="image/Screenshot_20240812_143231.jpg" alt="Lunettes Cat-Eye Pearly">
+                            <h3>Cat-Eye Pearly</h3>
+                            <p>Nacre scintillante, évoquant le luxe raffiné des soirées vintage.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev" onclick="changeSlide('carousel-3', -1)"></button>
+                    <button class="next" onclick="changeSlide('carousel-3', 1)"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="intro">
+            <h1>Notre Passion pour le Rétro</h1>
+            <p>Chez Zone Vintage, nous célébrons l’art du style intemporel. Nos lunettes sont soigneusement sélectionnées pour capturer l’essence des décennies passées, offrant une qualité artisanale et un charme unique. Que vous soyez un nostalgique des années 50 ou un amoureux du minimalisme des années 90, notre boutique a la paire parfaite pour vous.</p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <h2>Contactez-Nous</h2>
+            <p>Questions sur une paire ou envie de personnalisation ? Contactez-nous à <a href="mailto:contact@zonevintage.com">contact@zonevintage.com</a>.</p>
+            <p>Rejoignez notre communauté rétro et découvrez nos dernières collections :</p>
+            <p>
+                <a href="#">Instagram</a> | 
+                <a href="#">Twitter</a> | 
+                <a href="https://www.facebook.com/Zonevintage261.mdg">Facebook</a>
+            </p>
+            <p>Inscrivez-vous à notre newsletter pour des offres exclusives et des histoires vintage.</p>
+        </section>
+    </main>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <audio id="background-music" loop>
+            <!-- Add your music files here -->
+            <source src="track/Mac_DeMarco_-_Heart_To_Heart(256k).mp3" type="audio/mpeg">
+            <source src="track/fall_in_love_with_you.(256k).mp3" type="audio/mpeg">
+            <!-- Add more sources as needed -->
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="toggleMusic()">Play/Pause</button>
+    </div>
+
+    <!-- Fixed Footer -->
+    <footer>
+        <p>© 2025 Zone Vintage - Votre boutique de lunettes rétro</p>
+        <p>
+            <a href="login.html">Connexion</a> | 
+            <a href="signup.html">Inscription</a> | 
+            <a href="#contact">Contact</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Navbar Toggle
+        function toggleNavbar() {
+            document.getElementById("myNavbar").classList.toggle('show');
+        }
+
+        // Carousel Functionality
+        function changeSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            let current = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+            
+            slides[current].classList.remove('active');
+            current = (current + direction + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            
+            // Reset typewriter animation
+            const h3 = slides[current].querySelector('h3');
+            h3.style.animation = 'none';
+            h3.offsetHeight; // Trigger reflow
+            h3.style.animation = 'typewriter 2s steps(30, end) forwards, blink-caret 0.75s step-end infinite';
+        }
+
+        // Auto-Scrolling Carousel
+        const carousels = ['carousel-1', 'carousel-2', 'carousel-3'];
+        carousels.forEach(id => {
+            const carousel = document.getElementById(id);
+            let interval = setInterval(() => changeSlide(id, 1), 5000);
+            
+            carousel.addEventListener('mouseenter', () => clearInterval(interval));
+            carousel.addEventListener('mouseleave', () => {
+                interval = setInterval(() => changeSlide(id, 1), 5000);
+            });
+        });
+
+        // Music Player
+        const audio = document.getElementById('background-music');
+        const tracks = [
+            'track/Mac_DeMarco_-_Heart_To_Heart(256k).mp3',
+            'track/fall_in_love_with_you.(256k).mp3'
+            // Add more track paths here
+        ];
+        let currentTrack = 0;
+
+        audio.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % tracks.length;
+            audio.src = tracks[currentTrack];
+            audio.play();
+        });
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        // Start first track
+        if (tracks.length > 0) {
+            audio.src = tracks[0];
+            // Uncomment to auto-play (note: browsers may block auto-play without user interaction)
+            // audio.play();
+        }
+    </script>
+</body>
+</html>

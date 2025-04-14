@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zone Vintage - Galerie de Lunettes</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4e8c1; /* Sepia background */
+            font-family: 'Courier New', Courier, monospace;
+            color: #3b2d2d; /* Dark brown text */
+        }
+
+        /* Fixed Full-Width Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff1e1; /* Cream */
+            border-bottom: 3px solid #4a3728;
+            box-shadow: 0px 4px 12px rgba(74, 55, 40, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .navbar .icon {
+            display: block;
+            padding: 8px 15px;
+            cursor: pointer;
+            color: #4a3728;
+            font-size: 18px;
+            font-weight: bold;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=') repeat; /* Parchment texture */
+            border-radius: 50px;
+            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar .icon:hover {
+            background-color: #e8d9c2; /* Light sepia */
+            transform: scale(1.05);
+        }
+
+        .navbar a {
+            display: none; /* Hidden on mobile */
+            color: #4a3728;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 20px;
+            margin: 0 10px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=') repeat;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #e8d9c2;
+            color: #7b5e3f; /* Medium brown */
+            transform: scale(1.05);
+        }
+
+        .navbar.show a {
+            display: block;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px; /* Space for navbar */
+            padding-bottom: 100px; /* Space for footer */
+        }
+
+        .intro {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #fdf6e8; /* Light cream */
+            border-bottom: 3px solid #4a3728;
+            margin-bottom: 40px;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+            color: #4a3728;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            font-size: 16px;
+            color: #6b5846;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Portfolio (Product Gallery) */
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .portfolio-item {
+            background-color: #fff1e1; /* Cream */
+            border: 3px solid #4a3728;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(74, 55, 40, 0.2);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 12px 24px rgba(74, 55, 40, 0.3);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px; /* Fixed height */
+            object-fit: cover; /* Uniform sizing */
+            display: block;
+            border-bottom: 2px solid #4a3728;
+        }
+
+        .portfolio-item h3 {
+            font-size: 18px;
+            color: #4a3728;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .portfolio-item p {
+            font-size: 14px;
+            color: #6b5846;
+            padding: 0 15px;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .portfolio-item .price {
+            font-size: 16px;
+            color: #2e6b6b; /* Vintage teal */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .portfolio-item a {
+            display: inline-block;
+            color: #fff1e1;
+            background-color: #4a3728;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .portfolio-item a:hover {
+            background-color: #7b5e3f;
+            transform: scale(1.02);
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: #fff1e1;
+            border: 3px solid #4a3728;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px 20px;
+            text-align: center;
+            box-shadow: 0px 8px 16px rgba(74, 55, 40, 0.2);
+        }
+
+        .contact h2 {
+            font-size: 24px;
+            color: #4a3728;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact p {
+            font-size: 14px;
+            color: #6b5846;
+            margin: 10px 0;
+        }
+
+        .contact a {
+            color: #2e6b6b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .contact a:hover {
+            color: #3f8b8b;
+        }
+
+        /* Fixed Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff1e1;
+            border-top: 3px solid #4a3728;
+            box-shadow: 0px -4px 12px rgba(74, 55, 40, 0.2);
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: #6b5846;
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #2e6b6b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #3f8b8b;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media Queries */
+        @media screen and (min-width: 600px) {
+            .navbar {
+                flex-wrap: nowrap;
+            }
+
+            .navbar a {
+                display: inline-block;
+            }
+
+            .navbar .icon {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .portfolio {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navbar -->
+    <header>
+        <nav class="navbar" id="myNavbar">
+            <div class="icon" onclick="toggleNavbar()">☰ Menu</div>
+            <a href="accueil.html">Accueil</a>
+            <a href="collections.html">Collections</a>
+            <a href="#contact">Contact</a>
+            <a href="login.html">Connexion</a>
+            <a href="signup.html">Inscription</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Intro Section -->
+        <section class="intro">
+            <h1>Explorez Nos Lunettes Vintage</h1>
+            <p>Plongez dans l'élégance intemporelle avec Zone Vintage. Notre galerie présente des lunettes qui capturent l'esprit des époques révolues, des années 50 aux années 90. Chaque monture est une œuvre d'art, conçue pour ajouter une touche de nostalgie à votre style. Trouvez votre paire parfaite dès aujourd'hui.</p>
+        </section>
+
+        <!-- Portfolio (Product Gallery) -->
+        <section id="portfolio" class="portfolio">
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Wayfarer+Black" alt="Lunettes Wayfarer Black">
+                <h3>Black eboni</h3>
+                <p>Une icône des années 50, avec une monture noire robuste pour un look audacieux et classique.</p>
+                <p class="price">50.<sup>000</sup> MGA</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Round+Tortoise" alt="Lunettes Round Tortoise">
+                <h3>Round Tortoise</h3>
+                <p>Écaille de tortue vibrante, inspirée des années 60, pour une allure bohème et sophistiquée.</p>
+                <p class="price">$99.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Cat-Eye+Red" alt="Lunettes Cat-Eye Red">
+                <h3>Cat-Eye Red</h3>
+                <p>Rouge éclatant et forme féline, parfait pour les âmes audacieuses des années 50.</p>
+                <p class="price">$109.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Aviator+Gold" alt="Lunettes Aviator Gold">
+                <h3>Aviator Gold</h3>
+                <p>Monture dorée légendaire, évoquant l’aventure et le glamour des années 70.</p>
+                <p class="price">$119.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Clubmaster+Brown" alt="Lunettes Clubmaster Brown">
+                <h3>Clubmaster Brown</h3>
+                <p>Style intemporel des années 80, avec une monture marron pour une élégance discrète.</p>
+                <p class="price">$94.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Oversized+Clear" alt="Lunettes Oversized Clear">
+                <h3>Oversized Clear</h3>
+                <p>Monture transparente audacieuse, capturant l’esprit libre des années 90.</p>
+                <p class="price">$104.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Square+Black" alt="Lunettes Square Black">
+                <h3>Square Black</h3>
+                <p>Forme carrée moderne avec une touche rétro, pour un style polyvalent et chic.</p>
+                <p class="price">$89.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Butterfly+Pearly" alt="Lunettes Butterfly Pearly">
+                <h3>Butterfly Pearly</h3>
+                <p>Nacre scintillante et forme papillon, pour un glamour digne des années 60.</p>
+                <p class="price">$114.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Hexagonal+Silver" alt="Lunettes Hexagonal Silver">
+                <h3>Hexagonal Silver</h3>
+                <p>Forme géométrique audacieuse, argentée, inspirée des années 70 futuristes.</p>
+                <p class="price">$99.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Retro+Green" alt="Lunettes Retro Green">
+                <h3>Retro Green</h3>
+                <p>Vert olive unique, évoquant les vibes artistiques des années 80.</p>
+                <p class="price">$94.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Oval+Gold" alt="Lunettes Oval Gold">
+                <h3>Oval Gold</h3>
+                <p>Monture ovale dorée, pour une touche d’élégance raffinée des années 50.</p>
+                <p class="price">$109.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/250x200?text=Shield+Black" alt="Lunettes Shield Black">
+                <h3>Shield Black</h3>
+                <p>Design audacieux et enveloppant, pour un look rock des années 90.</p>
+                <p class="price">$119.99</p>
+                <a href="#">Voir Détails</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <h2>Contactez-Nous</h2>
+            <p>Questions sur une paire ou envie de personnalisation ? Contactez-nous à <a href="mailto:contact@zonevintage.com">contact@zonevintage.com</a>.</p>
+            <p>Rejoignez notre communauté rétro et découvrez nos dernières collections :</p>
+            <p>
+                <a href="#">Instagram</a> | 
+                <a href="#">Twitter</a> | 
+                <a href="https://www.facebook.com/Zonevintage261.mdg">Facebook</a>
+            </p>
+            <p>Inscrivez-vous à notre newsletter pour des offres exclusives et des histoires vintage.</p>
+        </section>
+    </main>
+
+    <!-- Fixed Footer -->
+    <footer>
+        <p>© 2025 Zone Vintage - Votre boutique de lunettes rétro</p>
+        <p>
+            <a href="login.html">Connexion</a> | 
+            <a href="signup.html">Inscription</a> | 
+            <a href="#contact">Contact</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleNavbar() {
+            document.getElementById("myNavbar").classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
